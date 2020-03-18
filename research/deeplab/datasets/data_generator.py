@@ -102,11 +102,11 @@ _ADE20K_INFORMATION = DatasetDescriptor(
 
 _NANONETS_SHERWIN_WILLIAMS = DatasetDescriptor(
     splits_to_sizes={
-        'train': 197,
-        'val': 24,
-        'test': 24,
+        'train': 1199,
+        'val': 114,
+        'test': 0,
     },
-    num_classes=4,
+    num_classes=3,
     ignore_label=255,
 )
 
