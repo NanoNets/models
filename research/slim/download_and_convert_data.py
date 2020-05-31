@@ -45,6 +45,7 @@ from datasets import download_and_convert_cifar10
 from datasets import download_and_convert_flowers
 from datasets import download_and_convert_mnist
 from datasets import download_and_convert_visualwakewords
+from datasets import convert_nanonets
 
 FLAGS = tf.compat.v1.app.flags.FLAGS
 
@@ -52,7 +53,7 @@ tf.compat.v1.app.flags.DEFINE_string(
     'dataset_name',
     None,
     'The name of the dataset to convert, one of "flowers", "cifar10", "mnist", "visualwakewords"'
-    )
+)
 
 tf.compat.v1.app.flags.DEFINE_string(
     'dataset_dir',
@@ -71,24 +72,29 @@ tf.flags.DEFINE_string(
 
 
 def main(_):
-  if not FLAGS.dataset_name:
-    raise ValueError('You must supply the dataset name with --dataset_name')
-  if not FLAGS.dataset_dir:
-    raise ValueError('You must supply the dataset directory with --dataset_dir')
+    if not FLAGS.dataset_name:
+        raise ValueError(
+            'You must supply the dataset name with --dataset_name')
+    if not FLAGS.dataset_dir:
+        raise ValueError(
+            'You must supply the dataset directory with --dataset_dir')
 
-  if FLAGS.dataset_name == 'flowers':
-    download_and_convert_flowers.run(FLAGS.dataset_dir)
-  elif FLAGS.dataset_name == 'cifar10':
-    download_and_convert_cifar10.run(FLAGS.dataset_dir)
-  elif FLAGS.dataset_name == 'mnist':
-    download_and_convert_mnist.run(FLAGS.dataset_dir)
-  elif FLAGS.dataset_name == 'visualwakewords':
-    download_and_convert_visualwakewords.run(
-        FLAGS.dataset_dir, FLAGS.small_object_area_threshold,
-        FLAGS.foreground_class_of_interest)
-  else:
-    raise ValueError(
-        'dataset_name [%s] was not recognized.' % FLAGS.dataset_name)
+    if FLAGS.dataset_name == 'flowers':
+        download_and_convert_flowers.run(FLAGS.dataset_dir)
+    elif FLAGS.dataset_name == 'cifar10':
+        download_and_convert_cifar10.run(FLAGS.dataset_dir)
+    elif FLAGS.dataset_name == 'mnist':
+        download_and_convert_mnist.run(FLAGS.dataset_dir)
+    elif FLAGS.dataset_name == 'nanonets':
+        convert_nanonets.run(FLAGS.dataset_dir)
+    elif FLAGS.dataset_name == 'visualwakewords':
+        download_and_convert_visualwakewords.run(
+            FLAGS.dataset_dir, FLAGS.small_object_area_threshold,
+            FLAGS.foreground_class_of_interest)
+    else:
+        raise ValueError(
+            'dataset_name [%s] was not recognized.' % FLAGS.dataset_name)
+
 
 if __name__ == '__main__':
-  tf.compat.v1.app.run()
+    tf.compat.v1.app.run()
